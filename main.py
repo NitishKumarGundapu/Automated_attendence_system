@@ -17,7 +17,7 @@ if not sys.warnoptions:
 mydb = msc.connect(
     host = "localhost",
     user = "root",
-    passwd ="nice",
+    passwd ="password",
     database = "project",
     auth_plugin='mysql_native_password'
 )
@@ -26,11 +26,8 @@ mc = mydb.cursor()
 mc.execute('select sid,spwd from student;')
 ds = dict(mc.fetchall())
 
-da = {
-    "ts101" : "ts101",
-    "ts102" : "ts102",
-    "ts103" : "ts103"
-}
+mc.execute('select aid,apwd from admin')
+da = dict(mc.fetchall())
 
 mc.execute('select sid,sname from student;')
 name_id = dict(mc.fetchall())
@@ -165,7 +162,8 @@ def admin_page(z):
         roots.mainloop()
 
     def upload_image():
-        a = askopenfile(parent=root1,mode='rb',title='Choose a file')
+        #a = askopenfile(parent=root1,mode='rb',title='Choose a file')
+        a = askopenfile(parent=root1,initialdir='test_images/',initialfile='nice')
         try:
             a = a.name
             if a != None:
@@ -251,7 +249,7 @@ def admin_page(z):
             return
 
     def stu_images():
-        rep = askopenfilenames(parent=root1,initialdir='C:/Users/nk/Desktop/final_aas/data/train/',initialfile='nice')
+        rep = askopenfilenames(parent=root1,initialdir='data/train/',initialfile='nice')
         print(rep)
 
     def help_desk():
