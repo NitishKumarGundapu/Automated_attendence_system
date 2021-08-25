@@ -14,5 +14,7 @@ create table admin(
 
 select * from admin;
 
+delete from admin where aid = "ts104";
+
 insert into admin values('ts104','ts104');
 
