@@ -67,12 +67,13 @@ def admin_page(z):
                 a1 = str(snamevar.get())
                 mc.execute('delete from student where sid=%s;',(a,))
                 mydb.commit()
-                location = 'C:/Users/nk/Desktop/final_aas/data/train/'+a1+'/'
+                location = 'data/train/'+a1+'/'
                 shutil.rmtree(location)
+                roots.destroy()
                 tk1.showinfo("Sucess","Student is Deleted")
             except Exception as e:
-                print(e)
-                tk1.showerror("Deletion failed","Error Occured")
+                roots.destroy()
+                tk1.showerror("Deletion failed","Error Occured\n"+str(e))
 
         def verify(snamevar,sidvar,spwdvar,sattendvar,periodsvar):
             try :
@@ -119,10 +120,10 @@ def admin_page(z):
         Label(roots,text = "Student Password",width=25,font=("Consolas",10)).place(x=70,y=225)
         Entry(roots,width=23,textvariable=spwdvar).place(x=245,y=225)
 
-        Label(roots,text = "Student Attendance",width=25,font=("Consolas",10)).place(x=70,y=275)
+        Label(roots,text = "Attended Periods",width=25,font=("Consolas",10)).place(x=70,y=275)
         Entry(roots,width=23,textvariable=sattendvar).place(x=245,y=275)
 
-        Label(roots,text = "Periods Attended",width=25,font=("Consolas",10)).place(x=70,y=325)
+        Label(roots,text = "Total Periods",width=25,font=("Consolas",10)).place(x=70,y=325)
         Entry(roots,width=23,textvariable=periodsvar).place(x=245,y=325)
 
         btn = Button(roots,text='Submit',width=20,command = lambda : verify(snamevar,sidvar,spwdvar,sattendvar,periodsvar))
@@ -162,7 +163,6 @@ def admin_page(z):
         roots.mainloop()
 
     def upload_image():
-        #a = askopenfile(parent=root1,mode='rb',title='Choose a file')
         a = askopenfile(parent=root1,initialdir='test_images/',initialfile='nice')
         try:
             a = a.name
@@ -250,7 +250,6 @@ def admin_page(z):
 
     def stu_images():
         rep = askopenfilenames(parent=root1,initialdir='data/train/',initialfile='nice')
-        print(rep)
 
     def help_desk():
         rooth = Tk()
@@ -331,7 +330,6 @@ def admin_page(z):
 
 def student_page(z):
     root1 = Tk()
-    print(z)
     root1.resizable(False,False)
     root1.geometry('530x530')
     u1 = Image.open("gui_icons/images_2.jpg")
