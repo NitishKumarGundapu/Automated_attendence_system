@@ -3,9 +3,9 @@ import cv2
 import sys
 import shutil
 import Mlpart
+import warnings
 from tkinter import *
 from tkinter.ttk import *
-import warnings
 from PIL import ImageTk,Image
 import mysql.connector as msc
 from tkinter import messagebox as tk1
@@ -17,7 +17,7 @@ if not sys.warnoptions:
 mydb = msc.connect(
     host = "localhost",
     user = "root",
-    passwd ="password",
+    passwd ="system",
     database = "project",
     auth_plugin='mysql_native_password'
 )
@@ -120,10 +120,10 @@ def admin_page(z):
         Label(roots,text = "Student Password",width=25,font=("Consolas",10)).place(x=70,y=225)
         Entry(roots,width=23,textvariable=spwdvar).place(x=245,y=225)
 
-        Label(roots,text = "Attended Periods",width=25,font=("Consolas",10)).place(x=70,y=275)
+        Label(roots,text = "Periods attended",width=25,font=("Consolas",10)).place(x=70,y=275)
         Entry(roots,width=23,textvariable=sattendvar).place(x=245,y=275)
 
-        Label(roots,text = "Total Periods",width=25,font=("Consolas",10)).place(x=70,y=325)
+        Label(roots,text = "Total periods",width=25,font=("Consolas",10)).place(x=70,y=325)
         Entry(roots,width=23,textvariable=periodsvar).place(x=245,y=325)
 
         btn = Button(roots,text='Submit',width=20,command = lambda : verify(snamevar,sidvar,spwdvar,sattendvar,periodsvar))
@@ -182,12 +182,12 @@ def admin_page(z):
             try:
                 rootg = Toplevel(root1)
                 rootg.resizable(False,False)
-                rootg.geometry('400x400')
+                rootg.geometry('450x450')
                 rootg.title('get_faces')
                 u2 = Image.open("gui_icons/images_2.jpg")
-                u2 = u2.resize((400,400),Image.ANTIALIAS)
+                u2 = u2.resize((450,450),Image.ANTIALIAS)
                 u2 = ImageTk.PhotoImage(u2)
-                Label(rootg,image=u2).place(x=0, y=0, width=400, height=400)
+                Label(rootg,image=u2).place(x=0, y=0, width=450, height=450)
 
                 def update_database():
                     try :
@@ -224,18 +224,20 @@ def admin_page(z):
                 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
                 img = cv2.imread(img_file.get())
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                '''
                 faces = face_cascade.detectMultiScale(gray, 1.1, 4)
                 for (x, y, w, h) in faces:
                     cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
+                '''
                 img = cv2.resize(img, (300, 150))
                 im = Image.fromarray(img)
                 imgtk = ImageTk.PhotoImage(image=im) 
-                Label(rootg, image=imgtk).place(x=50,y=75)
+                Label(rootg, image=imgtk).place(x=70,y=75)
 
                 l = Mlpart.get_faces(img_file.get())
                 Label(rootg, text = "the presenties are : "+str(l)).place(x=50,y=300)
 
-                Button(rootg,text='Update database',width=20,command=update_database).place(x=130,y=350)
+                Button(rootg,text='Update database',width=20,command=update_database).place(x=170,y=370)
                 rootg.mainloop()
             
             except Exception as e:
@@ -259,7 +261,7 @@ def admin_page(z):
         Label(rooth,text = "Instructions",width=20,font=("Consolas",17)).place(x=120,y=20)
         Label(rooth,text='1 . First upload the image which contains the \n student faces.',font=("Consolas",10)).place(x=20,y=80)
         Label(rooth,text='2 . Click on getfaces to identify the faces \n present in the photo.',font=("Consolas",10)).place(x=20,y=130)
-        Label(rooth,text='3 . Click on show attendence to get the attendence \n of the students.',font=("Consolas",10)).place(x=20,y=180)
+        Label(rooth,text='3 . Click on create student to create or edit \n student details.',font=("Consolas",10)).place(x=20,y=180)
         Label(rooth,text="4 . Click on create dataset to create the dataset \n for testing. ",font=("Consolas",10)).place(x=20,y=230)
         Label(rooth,text="5 . Click on student details to get the student \n details.",font=("Consolas",10)).place(x=20,y=280)
         Label(rooth,text="6 . For further details contact \n   1 . 18311A0509@sreenidhi.edu.in  \n   2 . 18311A0519@sreenidhi.edu.in  \n   3 . 18311A0532@sreenidhi.edu.in  \n",font=("Consolas",10)).place(x=20,y=330)
@@ -330,6 +332,7 @@ def admin_page(z):
 
 def student_page(z):
     root1 = Tk()
+    
     root1.resizable(False,False)
     root1.geometry('530x530')
     u1 = Image.open("gui_icons/images_2.jpg")
