@@ -17,7 +17,7 @@ if not sys.warnoptions:
 mydb = msc.connect(
     host = "localhost",
     user = "root",
-    passwd ="system",
+    passwd ="password",
     database = "project",
     auth_plugin='mysql_native_password'
 )
@@ -224,11 +224,6 @@ def admin_page(z):
                 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
                 img = cv2.imread(img_file.get())
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                '''
-                faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-                for (x, y, w, h) in faces:
-                    cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                '''
                 img = cv2.resize(img, (300, 150))
                 im = Image.fromarray(img)
                 imgtk = ImageTk.PhotoImage(image=im) 
@@ -332,7 +327,6 @@ def admin_page(z):
 
 def student_page(z):
     root1 = Tk()
-    
     root1.resizable(False,False)
     root1.geometry('530x530')
     u1 = Image.open("gui_icons/images_2.jpg")
