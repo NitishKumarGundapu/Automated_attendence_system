@@ -1,6 +1,6 @@
 # Automated_attendence_system
 
-This is the project that we have done as part of my Btech circulum . 
+This is the project that I have done as part of my BTECH circulum . 
 
 It is a GUI based face detection and recognition system where the faces present in the photo are detected and recognized.
 
