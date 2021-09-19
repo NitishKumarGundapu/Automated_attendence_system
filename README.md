@@ -20,6 +20,6 @@ How to Run:
 
 => click on "run.bat" file in the project to install necessary packages
 
-=> type all the commands as directed in "proj.session.sql" file in mysql shell to create student and admin table
+=> type all the commands as directed in "projectsql.session.sql" file in mysql shell to create student and admin table
 
 => run "main.py" to run the project.
