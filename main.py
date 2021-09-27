@@ -336,8 +336,18 @@ def student_page(z):
     root1.title(z)
 
     def upload(z):
-        tk1.showinfo("message ","click ok to start your images")
-        Mlpart.create_face(name_id[z])
+        def random_one():
+            Mlpart.create_face(name_id[z])
+            popup.destroy()
+
+        popup = Tk()
+        popup.wm_title("!")
+        msg = "Click ok to take Photos"
+        label = Label(popup, text=msg)
+        label.pack(side="top", fill="x", pady=10)
+        B1 = Button(popup, text="Okay", command = lambda : random_one())
+        B1.pack()
+        popup.mainloop()
 
     def view_att(z):
         mc = mydb.cursor()

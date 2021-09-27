@@ -3,7 +3,7 @@ import cv2
 import dlib
 import PIL.Image
 import numpy as np
-
+import joblib
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import Normalizer
 from sklearn.neighbors import KNeighborsClassifier
@@ -72,8 +72,7 @@ def extract_faces(filename):
     face_encoding = face_encodings(image)
     return face_encoding
 
-def get_faces(image_path):
-
+def create_and_save_model():
     data = np.load(r'data.npz')
     trainX, trainy = data['arr_0'], data['arr_1']
 
@@ -86,6 +85,25 @@ def get_faces(image_path):
 
     model = KNeighborsClassifier(n_neighbors=5)
     model.fit(trainX, trainy)
+
+    if os.path.exists('models/knn_model.pkl'):
+        return 
+    joblib.dump(model, 'models/knn_model.pkl')
+
+def get_faces(image_path):
+
+    data = np.load(r'data.npz')
+    trainX, trainy = data['arr_0'], data['arr_1']
+
+    in_encoder = Normalizer(norm='l2')
+    trainX = in_encoder.transform(trainX)
+    
+    out_encoder = LabelEncoder()
+    out_encoder.fit(trainy)
+    trainy = out_encoder.transform(trainy)
+
+    create_and_save_model()
+    model = joblib.load('models/knn_model.pkl')
 
     presenties = []
 
