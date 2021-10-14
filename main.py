@@ -8,6 +8,7 @@ from tkinter import *
 from tkinter.ttk import *
 from PIL import ImageTk,Image
 import mysql.connector as msc
+from numba import jit
 from tkinter import messagebox as tk1
 from tkinter.filedialog import askopenfile,askopenfilenames
 
@@ -42,7 +43,7 @@ def admin_page(z):
     uploadimage0 = uploadimage0.resize((930,630),Image.ANTIALIAS)
     uploadimage0 = ImageTk.PhotoImage(uploadimage0)
     Label(root1,image=uploadimage0).place(x=0, y=0, width=930, height=630)
-    
+
     img_file = StringVar()
 
     def create_stu():
@@ -153,10 +154,10 @@ def admin_page(z):
         e.grid(row=0,column=4)
         e=Label(roots,width=15,text='percen',borderwidth=2, relief='ridge',anchor='w')
         e.grid(row=0,column=5)
-        for student in mcc: 
+        for student in mcc:
             for j in range(len(student)):
-                e = Entry(roots, width=15) 
-                e.grid(row=i, column=j) 
+                e = Entry(roots, width=15)
+                e.grid(row=i, column=j)
                 e.insert(END, student[j])
             i=i+1
         Button(roots,text='Close',width=20,command=roots.destroy).place(x=230,y=200)
@@ -226,7 +227,7 @@ def admin_page(z):
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 img = cv2.resize(img, (300, 150))
                 im = Image.fromarray(img)
-                imgtk = ImageTk.PhotoImage(image=im) 
+                imgtk = ImageTk.PhotoImage(image=im)
                 Label(rootg, image=imgtk).place(x=70,y=75)
 
                 l = Mlpart.get_faces(img_file.get())
@@ -234,7 +235,7 @@ def admin_page(z):
 
                 Button(rootg,text='Update database',width=20,command=update_database).place(x=170,y=370)
                 rootg.mainloop()
-            
+
             except Exception as e:
                 tk1.showerror("Error",e)
 
@@ -265,7 +266,7 @@ def admin_page(z):
 
 
     Label(root1,text = "AUTOMATED ATTENDENCE SYSTEM",width=27,font=("Consolas",23)).place(x=230,y=40)
-    
+
     #row1
     uploadimage = Image.open("gui_icons/stu_img1.png")
     uploadimage = uploadimage.resize((95,90))
@@ -322,7 +323,7 @@ def admin_page(z):
     Button(root1,text = "Exit",width=20,command=root1.destroy).place(x=720,y=450)
 
     #Button(root1,text='Logout',width=20,command=root1.destroy).place(x=390,y=550)
-    
+
     root1.mainloop()
 
 def student_page(z):
@@ -340,7 +341,7 @@ def student_page(z):
             Mlpart.create_face(name_id[z])
             popup.destroy()
 
-        popup = Tk()
+        popup = Toplevel(root1)
         popup.wm_title("!")
         msg = "Click ok to take Photos"
         label = Label(popup, text=msg)
@@ -376,7 +377,7 @@ def student_page(z):
         rootv.mainloop()
 
     Label(root1,text = "Student Portal",width=18,font=("Consolas",20)).place(x=155,y=30)
-    
+
     #row1
     uploadimage = Image.open("gui_icons/stu_img1.png")
     uploadimage = uploadimage.resize((95,90))
@@ -402,11 +403,10 @@ def student_page(z):
     #row1
     Button(root1,text="Upload Images",width=20,command= lambda :upload(z)).place(x=77,y=230)
     Button(root1,text = "Student Details",width=20,command=lambda : view_student(z)).place(x=315,y=230)
-    
+
     #row2
     Button(root1,text="View Attendence",width=20,command=lambda : view_att(z)).place(x=77,y=435)
     Button(root1,text = "Exit",width=20,command=root1.destroy).place(x=315,y=435)
-
     root1.mainloop()
 
 def login_page():
@@ -425,7 +425,6 @@ def login_page():
     loginimage = loginimage.resize((105,122))
     loginicon = ImageTk.PhotoImage(loginimage)
     Label(root,image=loginicon).place(x=175,y=35)
-
     def verify(uservar,pwdvar,loginasvar):
         x = str(uservar.get())
         y = str(pwdvar.get())
@@ -460,4 +459,4 @@ def login_page():
     btn.place(x=160,y=370)
     root.mainloop()
 
-login_page()
+jt = jit()(login_page)
