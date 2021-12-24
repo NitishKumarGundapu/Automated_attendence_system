@@ -8,7 +8,6 @@ from tkinter import *
 from tkinter.ttk import *
 from PIL import ImageTk,Image
 import mysql.connector as msc
-from numba import jit
 from tkinter import messagebox as tk1
 from tkinter.filedialog import askopenfile,askopenfilenames
 
@@ -18,7 +17,7 @@ if not sys.warnoptions:
 mydb = msc.connect(
     host = "localhost",
     user = "root",
-    passwd ="password",
+    passwd ="system",
     database = "project",
     auth_plugin='mysql_native_password'
 )
@@ -459,4 +458,4 @@ def login_page():
     btn.place(x=160,y=370)
     root.mainloop()
 
-jt = jit()(login_page)
+login_page()

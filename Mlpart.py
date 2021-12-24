@@ -51,7 +51,7 @@ def create_face(z):
 
     init_img_no = int(len(os.listdir(face_folder)))
     img_no = init_img_no
-    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0)
     total_imgs = 50
     while True:
         ret, img = cap.read()
