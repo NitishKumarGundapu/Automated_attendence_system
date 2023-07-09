@@ -4,7 +4,7 @@ pip install -U scipy
 
 pip install -U opencv-python
 
-pip install -U pillow
+pip install Pillow==9.5.0
 
 pip install -U mysql-connector
 

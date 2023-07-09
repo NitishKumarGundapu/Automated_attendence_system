@@ -1,6 +1,7 @@
 import os
 import cv2
 import sys
+import PIL
 import shutil
 import Mlpart
 import warnings
@@ -17,7 +18,7 @@ if not sys.warnoptions:
 mydb = msc.connect(
     host = "localhost",
     user = "root",
-    passwd ="system",
+    passwd ="password",
     database = "project",
     auth_plugin='mysql_native_password'
 )
@@ -135,7 +136,7 @@ def admin_page(z):
     def view_stu():
         roots = Tk()
         roots.resizable(False,False)
-        roots.geometry("580x250")
+        roots.geometry("680x250")
         roots.title('database')
         mc = mydb.cursor()
         mc.execute('select * from student')
